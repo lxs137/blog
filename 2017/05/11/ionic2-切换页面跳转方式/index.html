@@ -6,17 +6,24 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://www.menya.space">
-  <title>Archives: 2017/4 | 门牙de博客</title>
+  <title>ionic2 切换页面跳转方式 | 门牙de博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="Blog">
-<meta property="og:type" content="website">
-<meta property="og:title" content="门牙de博客">
-<meta property="og:url" content="http://www.menya.space/archives/2017/04/index.html">
+  <meta name="description" content="在Ionic2中，在android与ios上有两种默认的跳转方式，如果对默认的不满意，或者说只是想个别页面使用不同的跳转方式，该怎么做呢？
+切换全局页面跳转方式这个比较简单，直接修改app.moudle.ts文件：
+12345678910111213@NgModule(&amp;#123;    declarations: [ MyApp ],    imports: [        BrowserMo">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ionic2 切换页面跳转方式">
+<meta property="og:url" content="http://www.menya.space/2017/05/11/ionic2-切换页面跳转方式/index.html">
 <meta property="og:site_name" content="门牙de博客">
-<meta property="og:description" content="Blog">
+<meta property="og:description" content="在Ionic2中，在android与ios上有两种默认的跳转方式，如果对默认的不满意，或者说只是想个别页面使用不同的跳转方式，该怎么做呢？
+切换全局页面跳转方式这个比较简单，直接修改app.moudle.ts文件：
+12345678910111213@NgModule(&amp;#123;    declarations: [ MyApp ],    imports: [        BrowserMo">
+<meta property="og:updated_time" content="2017-05-11T11:55:24.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="门牙de博客">
-<meta name="twitter:description" content="Blog">
+<meta name="twitter:title" content="ionic2 切换页面跳转方式">
+<meta name="twitter:description" content="在Ionic2中，在android与ios上有两种默认的跳转方式，如果对默认的不满意，或者说只是想个别页面使用不同的跳转方式，该怎么做呢？
+切换全局页面跳转方式这个比较简单，直接修改app.moudle.ts文件：
+12345678910111213@NgModule(&amp;#123;    declarations: [ MyApp ],    imports: [        BrowserMo">
   
     <link rel="alternative" href="/atom.xml" title="门牙de博客" type="application/atom+xml">
   
@@ -140,49 +147,139 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-ionic2-切换页面跳转方式" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2017" class="archive-year">2017</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/04/03/hello-world/" class="archive-article-date">
-  	<time datetime="2017-04-03T09:41:30.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-04-03</time>
-</a>
-        </div>
-    	 
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/04/03/hello-world/">Hello World</a>
+    <h1 class="article-title" itemprop="name">
+      ionic2 切换页面跳转方式
     </h1>
   
 
-        <div class="article-info info-on-right">
-          
-          
+        
+        <a href="/2017/05/11/ionic2-切换页面跳转方式/" class="archive-article-date">
+  	<time datetime="2017-05-11T11:17:38.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-05-11</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h6 id="在Ionic2中，在android与ios上有两种默认的跳转方式，如果对默认的不满意，或者说只是想个别页面使用不同的跳转方式，该怎么做呢？"><a href="#在Ionic2中，在android与ios上有两种默认的跳转方式，如果对默认的不满意，或者说只是想个别页面使用不同的跳转方式，该怎么做呢？" class="headerlink" title="在Ionic2中，在android与ios上有两种默认的跳转方式，如果对默认的不满意，或者说只是想个别页面使用不同的跳转方式，该怎么做呢？"></a>在Ionic2中，在android与ios上有两种默认的跳转方式，如果对默认的不满意，或者说只是想个别页面使用不同的跳转方式，该怎么做呢？</h6><ol>
+<li><p>切换全局页面跳转方式<br>这个比较简单，直接修改app.moudle.ts文件：</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@NgModule</span>(&#123;</div><div class="line">    declarations: [ MyApp ],</div><div class="line">    imports: [</div><div class="line">        BrowserModule,</div><div class="line">        IonicModule.forRoot(MyApp, &#123;</div><div class="line">            pageTransition: <span class="string">'ios-transition'</span></div><div class="line"><span class="comment">//  三种："ios-transition", "md-transition", "wp-transition"</span></div><div class="line">        &#125;, &#123;&#125;</div><div class="line">    )],</div><div class="line">    bootstrap: [IonicApp],</div><div class="line">    entryComponents: [ MyApp ],</div><div class="line">    providers: []</div><div class="line">&#125;)</div></pre></td></tr></table></figure>
+</li>
+<li><p>切换个别页面跳转方式<br>假设是从OriginPage跳转到DisPage<br>在OriginPage.ts中：</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> &#123; Config &#125; <span class="keyword">from</span> <span class="string">'ionic-angular'</span>;</div><div class="line"></div><div class="line"><span class="keyword">constructor</span>(<span class="params"><span class="keyword">public</span> config: Config</span>) &#123;&#125;</div><div class="line"></div><div class="line"><span class="keyword">this</span>.config.set(<span class="string">'ios'</span>, <span class="string">'pageTransition'</span>, <span class="string">'md-transition'</span>);</div><div class="line"><span class="keyword">this</span>.navCtrl.push(DisPage);</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>在跳转后，记得将页面跳转方式修改回去,在DisPage.ts中：<br><figure class="highlight ts"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 每当页面处于激活状态，即位于页面堆栈顶端时调用</span></div><div class="line">ionViewDidEnter() </div><div class="line">&#123;</div><div class="line">    <span class="keyword">this</span>.config.set(<span class="string">'ios'</span>, <span class="string">'pageTransition'</span>, <span class="string">'ios-transition'</span>);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<ol>
+<li>修改页面跳转动画（未完成）</li>
+</ol>
 
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">ionic2</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="http://s.jiathis.com/qrcode.php?url=http://www.menya.space/2017/05/11/ionic2-切换页面跳转方式/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
+  
+<nav id="article-nav">
   
   
-    </div></section>
+    <a href="/2017/04/03/hello-world/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Hello World</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+
+
+
+
+  
+    <div class="duoshuo"></div>
   
 
-    
+
 
 
           </div>
@@ -205,8 +302,8 @@
 	var yiliaConfig = {
 		mathjax: true,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,
