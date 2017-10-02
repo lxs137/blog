@@ -148,79 +148,6 @@
           <div id="js-content" class="content-ll">
             
   
-    <article id="post-ionic2-切换页面跳转方式" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/05/11/ionic2-切换页面跳转方式/">ionic2 切换页面跳转方式</a>
-    </h1>
-  
-
-        
-        <a href="/2017/05/11/ionic2-切换页面跳转方式/" class="archive-article-date">
-  	<time datetime="2017-05-11T11:17:38.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-05-11</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h6 id="在Ionic2中，在android与ios上有两种默认的跳转方式，如果对默认的不满意，或者说只是想个别页面使用不同的跳转方式，该怎么做呢？"><a href="#在Ionic2中，在android与ios上有两种默认的跳转方式，如果对默认的不满意，或者说只是想个别页面使用不同的跳转方式，该怎么做呢？" class="headerlink" title="在Ionic2中，在android与ios上有两种默认的跳转方式，如果对默认的不满意，或者说只是想个别页面使用不同的跳转方式，该怎么做呢？"></a>在Ionic2中，在android与ios上有两种默认的跳转方式，如果对默认的不满意，或者说只是想个别页面使用不同的跳转方式，该怎么做呢？</h6><ol>
-<li><p>切换全局页面跳转方式<br>这个比较简单，直接修改app.moudle.ts文件：</p>
-<figure class="highlight ts"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@NgModule</span>(&#123;</div><div class="line">    declarations: [ MyApp ],</div><div class="line">    imports: [</div><div class="line">        BrowserModule,</div><div class="line">        IonicModule.forRoot(MyApp, &#123;</div><div class="line">            pageTransition: <span class="string">'ios-transition'</span></div><div class="line"><span class="comment">//  三种："ios-transition", "md-transition", "wp-transition"</span></div><div class="line">        &#125;, &#123;&#125;</div><div class="line">    )],</div><div class="line">    bootstrap: [IonicApp],</div><div class="line">    entryComponents: [ MyApp ],</div><div class="line">    providers: []</div><div class="line">&#125;)</div></pre></td></tr></table></figure>
-</li>
-<li><p>切换个别页面跳转方式<br>假设是从OriginPage跳转到DisPage<br>在OriginPage.ts中：</p>
-<figure class="highlight ts"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> &#123; Config &#125; <span class="keyword">from</span> <span class="string">'ionic-angular'</span>;</div><div class="line"></div><div class="line"><span class="keyword">constructor</span>(<span class="params"><span class="keyword">public</span> config: Config</span>) &#123;&#125;</div><div class="line"></div><div class="line"><span class="keyword">this</span>.config.set(<span class="string">'ios'</span>, <span class="string">'pageTransition'</span>, <span class="string">'md-transition'</span>);</div><div class="line"><span class="keyword">this</span>.navCtrl.push(DisPage);</div></pre></td></tr></table></figure>
-</li>
-</ol>
-<p>在跳转后，记得将页面跳转方式修改回去,在DisPage.ts中：<br><figure class="highlight ts"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 每当页面处于激活状态，即位于页面堆栈顶端时调用</span></div><div class="line">ionViewDidEnter() </div><div class="line">&#123;</div><div class="line">    <span class="keyword">this</span>.config.set(<span class="string">'ios'</span>, <span class="string">'pageTransition'</span>, <span class="string">'ios-transition'</span>);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<ol>
-<li>修改页面跳转动画（未完成）</li>
-</ol>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">ionic2</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/05/11/ionic2-切换页面跳转方式/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-
-
-
-  
     <article id="post-collection" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -248,6 +175,8 @@
 <li><a href="http://zhuanlan.zhihu.com/graphics/20119162" target="_blank" rel="external">图形学-知乎专栏</a></li>
 <li><a href="http://www.cnblogs.com/starfallen/p/4019350.html" target="_blank" rel="external">菲涅尔反射</a></li>
 <li><a href="http://www.lightxue.com/transforming-code-into-beautiful-idiomatic-python" target="_blank" rel="external">让你的Python代码优雅又地道</a></li>
+<li><a href="https://zhuanlan.zhihu.com/p/27199954" target="_blank" rel="external">GAN图像处理</a></li>
+<li><a href="https://zhuanlan.zhihu.com/p/29792886" target="_blank" rel="external">Promise异步流程控制</a></li>
 </ul>
 
       
