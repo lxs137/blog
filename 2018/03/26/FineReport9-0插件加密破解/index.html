@@ -6,17 +6,21 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://www.menya.space">
-  <title>Archives: 2017 | 门牙de博客</title>
+  <title>FineReport9.0插件加密破解 | 门牙de博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="Blog">
-<meta property="og:type" content="website">
-<meta property="og:title" content="门牙de博客">
-<meta property="og:url" content="http://www.menya.space/archives/2017/index.html">
+  <meta name="description" content="本文不讨论怎样进行破解，只是叙述一下研究加密过程的各个步骤 0.插件加密从FineReport9.0之后，所有的插件在打包过程中会被加密，如果直接解压打包后生成的jar包，仍然可以得到class文件，但是这些class文件是加密过的，无法用常见的Decompiler软件打开。  破解的思路有两种，一种是寻找FineReport加载插件所使用的ClassLoader，这其中必然有对Class文件解密">
+<meta name="keywords" content="Java反编译">
+<meta property="og:type" content="article">
+<meta property="og:title" content="FineReport9.0插件加密破解">
+<meta property="og:url" content="http://www.menya.space/2018/03/26/FineReport9-0插件加密破解/index.html">
 <meta property="og:site_name" content="门牙de博客">
-<meta property="og:description" content="Blog">
+<meta property="og:description" content="本文不讨论怎样进行破解，只是叙述一下研究加密过程的各个步骤 0.插件加密从FineReport9.0之后，所有的插件在打包过程中会被加密，如果直接解压打包后生成的jar包，仍然可以得到class文件，但是这些class文件是加密过的，无法用常见的Decompiler软件打开。  破解的思路有两种，一种是寻找FineReport加载插件所使用的ClassLoader，这其中必然有对Class文件解密">
+<meta property="og:image" content="http://www.menya.space/img/finereport/corrupted_class.png">
+<meta property="og:updated_time" content="2018-03-26T08:09:47.739Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="门牙de博客">
-<meta name="twitter:description" content="Blog">
+<meta name="twitter:title" content="FineReport9.0插件加密破解">
+<meta name="twitter:description" content="本文不讨论怎样进行破解，只是叙述一下研究加密过程的各个步骤 0.插件加密从FineReport9.0之后，所有的插件在打包过程中会被加密，如果直接解压打包后生成的jar包，仍然可以得到class文件，但是这些class文件是加密过的，无法用常见的Decompiler软件打开。  破解的思路有两种，一种是寻找FineReport加载插件所使用的ClassLoader，这其中必然有对Class文件解密">
+<meta name="twitter:image" content="http://www.menya.space/img/finereport/corrupted_class.png">
   
     <link rel="alternative" href="/atom.xml" title="门牙de博客" type="application/atom+xml">
   
@@ -146,60 +150,159 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-FineReport9-0插件加密破解" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2017" class="archive-year">2017</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/05/10/collection/" class="archive-article-date">
-  	<time datetime="2017-05-10T11:24:38.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-05-10</time>
-</a>
-        </div>
-    	 
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/05/10/collection/">文章收藏</a>
+    <h1 class="article-title" itemprop="name">
+      FineReport9.0插件加密破解
     </h1>
   
 
-        <div class="article-info info-on-right">
-          
+        
+        <a href="/2018/03/26/FineReport9-0插件加密破解/" class="archive-article-date">
+  	<time datetime="2018-03-26T06:59:48.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-03-26</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>本文不讨论怎样进行破解，只是叙述一下研究加密过程的各个步骤</p>
+<h4 id="0-插件加密"><a href="#0-插件加密" class="headerlink" title="0.插件加密"></a>0.插件加密</h4><p>从FineReport9.0之后，所有的插件在打包过程中会被加密，如果直接解压打包后生成的jar包，仍然可以得到class文件，但是这些class文件是加密过的，无法用常见的Decompiler软件打开。</p>
+<p><img src="/img/finereport/corrupted_class.png" alt=""></p>
+<p>破解的思路有两种，一种是寻找FineReport加载插件所使用的ClassLoader，这其中必然有对Class文件解密的过程，还有一种就是寻找在插件打包的过程中，是怎样对插件进行加密的，本文采用的是第二种。</p>
+<a id="more"></a>
+<h4 id="1-从Ant构建配置文件开始"><a href="#1-从Ant构建配置文件开始" class="headerlink" title="1.从Ant构建配置文件开始"></a>1.从Ant构建<a href="http://dev.fanruan.com:8090/pages/viewpage.action?pageId=7536698" target="_blank" rel="noopener">配置文件</a>开始</h4><p>下面是构建文件(build.xml)的一部分，关键就在这部分：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">taskdef</span> <span class="attr">name</span>=<span class="string">"pretreatment"</span> <span class="attr">classname</span>=<span class="string">"com.fr.plugin.pack.PluginPretreatmentTask"</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">classpath</span> <span class="attr">refid</span>=<span class="string">"compile.classpath"</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">taskdef</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">pretreatment</span> <span class="attr">baseDir</span>=<span class="string">"$&#123;basedir&#125;"</span>/&gt;</span></span><br></pre></td></tr></table></figure>
+<p>我们可以看到在使用Ant构建的过程中，使用了<strong>com.fr.plugin.pack.PluginPretreatmentTask</strong>这个类进行预处理，并传入了一个<strong>baseDir</strong>的参数，这个类位于fr-core这个jar包中</p>
+<h4 id="2-PluginPretreatmentTask"><a href="#2-PluginPretreatmentTask" class="headerlink" title="2.PluginPretreatmentTask"></a>2.PluginPretreatmentTask</h4><ul>
+<li>在<strong>PluginPretreatmentTask</strong>的<strong>execute</strong>函数中，关键是<code>PluginStartup.start()</code>(加载进特殊的ClassLoader)和<code>PluginManager.pretreatment(this.config)</code>(对插件编译后的Class二进制数据进行加密等其他操作),</li>
+</ul>
+<h4 id="3-加载ClassLoader"><a href="#3-加载ClassLoader" class="headerlink" title="3.加载ClassLoader"></a>3.加载ClassLoader</h4><ul>
+<li>在<code>PluginStartup.start()</code>中关键是<strong>initEncryptedBridge</strong>函数，其中将<strong>bridge</strong>包中的<strong>Start</strong>类加载进来，并使用新的ClassLoader加载<strong>FinePluginBridge</strong></li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">initEncryptedBridge</span><span class="params">()</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">	EngineClassLoaderFactory var0 = (EngineClassLoaderFactory)Class.forName(<span class="string">"com.fr.plugin.bridge.Start"</span>).newInstance();</span><br><span class="line">	ClassLoader var1 = var0.create();</span><br><span class="line">	Class.forName(<span class="string">"com.fr.plugin.bridge.FinePluginBridge"</span>, <span class="keyword">true</span>, var1);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>在<strong>Start</strong>这个类中，主要做的事一是将<strong>bridge</strong>包中的一个classx文件加载进来，并对他进行AES的解密，解密后的数据就是<strong>EngineClassLoaderFactory</strong>“的一个子类，对其调用create方法</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> ClassLoader <span class="title">create</span><span class="params">()</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">	<span class="keyword">return</span> <span class="keyword">this</span>.decryptFactory().create();</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">private</span> EngineClassLoaderFactory <span class="title">decryptFactory</span><span class="params">()</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">	<span class="keyword">byte</span>[] var1 = PluginBaseUtils.inputStream2Bytes(<span class="keyword">super</span>.getResourceAsStream(<span class="string">"com/fr/plugin/bridge/_4c1a49e2_0fcf_443f_94e3_f1c53998b507.classx"</span>));</span><br><span class="line">	<span class="keyword">try</span> &#123;</span><br><span class="line">		Field var3 = Unsafe.class.getDeclaredField(<span class="string">"theUnsafe"</span>);</span><br><span class="line">		var3.setAccessible(<span class="keyword">true</span>);</span><br><span class="line">		Unsafe var2 = (Unsafe)var3.get((Object)<span class="keyword">null</span>);</span><br><span class="line">		<span class="keyword">byte</span>[] var5 = <span class="keyword">this</span>._e943abcb_2557_46ac_a860_56ba4460beec().doFinal(var1);</span><br><span class="line">		Class var4 = var2.defineClass(<span class="string">"com.fr.plugin.bridge._4c1a49e2_0fcf_443f_94e3_f1c53998b507"</span>, var5, <span class="number">0</span>, var5.length, <span class="keyword">this</span>, (ProtectionDomain)<span class="keyword">null</span>);</span><br><span class="line">		<span class="keyword">return</span> (EngineClassLoaderFactory)var4.newInstance();</span><br><span class="line">	&#125; <span class="keyword">catch</span> (Throwable var6) &#123;</span><br><span class="line">		<span class="keyword">throw</span> <span class="keyword">new</span> ClassNotFoundException(<span class="string">""</span>);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">private</span> Cipher <span class="title">_e943abcb_2557_46ac_a860_56ba4460beec</span><span class="params">()</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">	Cipher var1 = Cipher.getInstance(<span class="string">"AES"</span>);</span><br><span class="line">	<span class="keyword">byte</span>[] var2 = <span class="keyword">new</span> <span class="keyword">byte</span>[]&#123;<span class="number">38</span>, <span class="number">105</span>, <span class="number">13</span>, <span class="number">112</span>, <span class="number">95</span>, -<span class="number">7</span>, <span class="number">73</span>, -<span class="number">21</span>, -<span class="number">122</span>, <span class="number">57</span>, -<span class="number">75</span>, <span class="number">123</span>, <span class="number">31</span>, -<span class="number">120</span>, <span class="number">84</span>, <span class="number">52</span>&#125;;</span><br><span class="line">	SecretKeySpec var4 = <span class="keyword">new</span> SecretKeySpec(var2, <span class="string">"AES"</span>);</span><br><span class="line">	var1.init(<span class="number">2</span>, var4);</span><br><span class="line">	<span class="keyword">return</span> var1;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>如果将”_4c1a49e2_0fcf_443f_94e3_f1c53998b507.classx”文件解密并反编译，会发现生成一个与<strong>Start</strong>十分类似的类。因此，它就使用了这种方法将最终的ClassLoader使用不同的AES密钥加密了100层。这个ClassLoader的逻辑类似，同样是当类属于特定的包时，使用AES对其二进制数据进行解谜。</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 该ClassLoader只对下面这些包中的类起作用</span></span><br><span class="line"><span class="keyword">if</span> (var1.startsWith(<span class="string">"com.fr.plugin.engine"</span>) || var1.startsWith(<span class="string">"com.fr.plugin.A"</span>) || var1.startsWith(<span class="string">"com.fr.plugin.bridge"</span>)) &#123;</span><br><span class="line">	<span class="keyword">try</span> &#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="keyword">this</span>.findClass(var1);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="4-FinePluginBridge"><a href="#4-FinePluginBridge" class="headerlink" title="4.FinePluginBridge"></a>4.FinePluginBridge</h4><p>插件加密的关键代码如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">pretreatment</span><span class="params">(PluginPretreatmentConfig var1)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">	<span class="comment">// 使用所有Pretreatment插件依次对源文件的class数据进行处理</span></span><br><span class="line">	com.fr.plugin.A.H.A.L().A(var1);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">static</span> &#123;</span><br><span class="line">	<span class="keyword">try</span> &#123;</span><br><span class="line">		<span class="comment">// 加载插件加密关键类</span></span><br><span class="line">		A.B().A();</span><br><span class="line">		PluginManager.registerBridge(BRIDGE);</span><br><span class="line">	&#125; <span class="keyword">catch</span> (Throwable var1) &#123;</span><br><span class="line">		com.fr.plugin.A.J.B.A(var1);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这里有一点有趣的就是，如果我们阅读<code>com.fr.plugin.A.H.A.L().A(var1)</code>里面的预处理过程会发现，它调用了一个<code>com.fr.plugin.A.H.D</code>的类，但这个类的class文件并没有出现在我们解压后的fr-core包中。他这里运用到了ClassLoader的缓存加载数据的特点，即会先寻找某个类是否已经loaded，在<code>A.B().A()</code>过程中就将这个<code>com.fr.plugin.A.H.D</code>类加载进内存</p>
+<h4 id="5-预加载关键类"><a href="#5-预加载关键类" class="headerlink" title="5.预加载关键类"></a>5.预加载关键类</h4><p>阅读<code>A.B().A()</code> 的代码发现，加载类的关键代码位于<code>com.fr.plugin.A.M.A.B</code>, E()的结果是类的数据, D()的结果是类的包名加类名:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">A</span><span class="params">(ClassLoader classLoader)</span> </span>&#123;</span><br><span class="line">	<span class="keyword">try</span> &#123;</span><br><span class="line">       <span class="comment">// D(): getName -&gt; string</span></span><br><span class="line">       <span class="comment">// E(): getBytes -&gt; byte[]</span></span><br><span class="line">		B.A(classLoader, D(), E());</span><br><span class="line">       <span class="comment">// 相当于ClassLoader.defineClass(D(), E(), 0, E().length)</span></span><br><span class="line">	&#125; <span class="keyword">catch</span> (Throwable th) &#123;</span><br><span class="line">		com.fr.plugin.A.J.B.A(th);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这段代码对每一个实现了相同接口的类调用了该过程将其加载进内存，每一个类的形式如下所示，其中的A方法就是将传入的两个字节数组拼接:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@H</span>(A = <span class="string">"getName"</span>)</span><br><span class="line"><span class="function"><span class="keyword">public</span> String <span class="title">D</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	<span class="keyword">try</span> &#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="keyword">new</span> String(<span class="keyword">new</span> <span class="keyword">byte</span>[]&#123;(<span class="keyword">byte</span>) <span class="number">99</span>, (<span class="keyword">byte</span>) <span class="number">111</span>, (<span class="keyword">byte</span>) <span class="number">109</span>, (<span class="keyword">byte</span>) <span class="number">46</span>, (<span class="keyword">byte</span>) <span class="number">102</span>, (<span class="keyword">byte</span>) <span class="number">114</span>, (<span class="keyword">byte</span>) <span class="number">46</span>, (<span class="keyword">byte</span>) <span class="number">103</span>, (<span class="keyword">byte</span>) <span class="number">101</span>, (<span class="keyword">byte</span>) <span class="number">110</span>, (<span class="keyword">byte</span>) <span class="number">101</span>, (<span class="keyword">byte</span>) <span class="number">114</span>, (<span class="keyword">byte</span>) <span class="number">97</span>, (<span class="keyword">byte</span>) <span class="number">108</span>, (<span class="keyword">byte</span>) <span class="number">46</span>, (<span class="keyword">byte</span>) <span class="number">65</span>, (<span class="keyword">byte</span>) <span class="number">112</span>, (<span class="keyword">byte</span>) <span class="number">112</span>, (<span class="keyword">byte</span>) <span class="number">67</span>, (<span class="keyword">byte</span>) <span class="number">111</span>, (<span class="keyword">byte</span>) <span class="number">110</span>, (<span class="keyword">byte</span>) <span class="number">116</span>, (<span class="keyword">byte</span>) <span class="number">101</span>, (<span class="keyword">byte</span>) <span class="number">110</span>, (<span class="keyword">byte</span>) <span class="number">116</span>, (<span class="keyword">byte</span>) <span class="number">71</span>, (<span class="keyword">byte</span>) <span class="number">101</span>, (<span class="keyword">byte</span>) <span class="number">110</span>, (<span class="keyword">byte</span>) <span class="number">101</span>, (<span class="keyword">byte</span>) <span class="number">114</span>, (<span class="keyword">byte</span>) <span class="number">97</span>, (<span class="keyword">byte</span>) <span class="number">116</span>, (<span class="keyword">byte</span>) <span class="number">111</span>, (<span class="keyword">byte</span>) <span class="number">114</span>&#125;, <span class="string">"UTF-8"</span>);</span><br><span class="line">	&#125; <span class="keyword">catch</span> (Throwable th) &#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="string">""</span>;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="meta">@H</span>(A = <span class="string">"getBytes"</span>)</span><br><span class="line"><span class="keyword">public</span> <span class="keyword">byte</span>[] E() &#123;</span><br><span class="line">	<span class="keyword">return</span> A(A(A(A(A(A(A(A(<span class="keyword">new</span> <span class="keyword">byte</span>[<span class="number">0</span>], getByteCode0()), getByteCode1()), getByteCode2()), getByteCode3()), getByteCode4()), getByteCode5()), getByteCode6()), getByteCode7());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>我们将这些类加载后，就会发现<code>com.fr.plugin.A.H.D</code>这个类了。</p>
+<h4 id="6-加密过程"><a href="#6-加密过程" class="headerlink" title="6.加密过程"></a>6.加密过程</h4><p>加密过程很简单，就是在打包过程中，使用随机生成的AES密钥对源码Class文件进行加密，并将密钥加密后存在打包过后的某个文件中。</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">collection</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">Java反编译</a>
         		</li>
       		
 		</ul>
 	</div>
 
-          
+      
 
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="http://s.jiathis.com/qrcode.php?url=http://www.menya.space/2018/03/26/FineReport9-0插件加密破解/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
+  
+<nav id="article-nav">
   
   
-    </div></section>
+    <a href="/2017/05/10/collection/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">文章收藏</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+
+
+
+
+  
+    <div class="duoshuo"></div>
   
 
-    
+
 
 
           </div>
@@ -222,8 +325,8 @@
 	var yiliaConfig = {
 		mathjax: true,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,
