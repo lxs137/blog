@@ -6,12 +6,12 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://www.menya.space">
-  <title>门牙de博客</title>
+  <title>Archives: 2018/6 | 门牙de博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="Blog">
 <meta property="og:type" content="website">
 <meta property="og:title" content="门牙de博客">
-<meta property="og:url" content="http://www.menya.space/index.html">
+<meta property="og:url" content="http://www.menya.space/archives/2018/06/index.html">
 <meta property="og:site_name" content="门牙de博客">
 <meta property="og:description" content="Blog">
 <meta name="twitter:card" content="summary">
@@ -142,200 +142,47 @@
           <div id="js-content" class="content-ll">
             
   
-    <article id="post-gradle构建" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
+  
     
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/06/22/gradle构建/">gradle构建</a>
-    </h1>
-  
-
-        
-        <a href="/2018/06/22/gradle构建/" class="archive-article-date">
+    
+      
+      
+      <section class="archives-wrap">
+        <div class="archive-year-wrap">
+          <a href="/archives/2018" class="archive-year">2018</a>
+        </div>
+        <div class="archives">
+    
+    <article class="archive-article archive-type-post">
+  <div class="archive-article-inner">
+    <header class="archive-article-header">
+      	<div class="article-meta">
+	      	<a href="/2018/06/22/gradle构建/" class="archive-article-date">
   	<time datetime="2018-06-22T11:55:06.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-06-22</time>
 </a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>最近打包android项目的时候，gradle总是报错：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Could not get resource &apos;http://maven.google.com/com/android/tools/build/gradle/3.1.3/gradle-3.1.3.pom&apos;.</span><br><span class="line">Could not GET &apos;http://maven.google.com/com/android/tools/build/gradle/3.1.1/gradle-3.1.3.pom&apos;.</span><br></pre></td></tr></table></figure>
-<p>本来以为这是和gradle build-tools的版本或者墙有关，测试下来，发现都不行，折腾了一下午也没找到原因，多亏这条<a href="https://stackoverflow.com/a/50603113/9797889" target="_blank" rel="noopener">回答</a>给了我启发。gradle在系统级别有一个配置文件gradle.properties，位于~/.gradle目录下，删除其中所有关于代理的配置：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">systemProp.https.proxyPort=1080</span><br><span class="line">systemProp.http.proxyHost=127.0.0.1</span><br><span class="line">systemProp.https.proxyHost=127.0.0.1</span><br><span class="line">systemProp.http.proxyPort=1080</span><br></pre></td></tr></table></figure>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/06/22/gradle构建/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-
-
-
-  
-    <article id="post-FineReport9-0插件加密破解" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
+        </div>
+    	 
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2018/03/26/FineReport9-0插件加密破解/">FineReport9.0插件加密破解</a>
+      <a class="archive-article-title" href="/2018/06/22/gradle构建/">gradle构建</a>
     </h1>
   
 
-        
-        <a href="/2018/03/26/FineReport9-0插件加密破解/" class="archive-article-date">
-  	<time datetime="2018-03-26T06:59:48.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-03-26</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>本文不讨论怎样进行破解，只是叙述一下研究加密过程的各个步骤</p>
-<h4 id="0-插件加密"><a href="#0-插件加密" class="headerlink" title="0.插件加密"></a>0.插件加密</h4><p>从FineReport9.0之后，所有的插件在打包过程中会被加密，如果直接解压打包后生成的jar包，仍然可以得到class文件，但是这些class文件是加密过的，无法用常见的Decompiler软件打开。</p>
-<p><img src="/img/finereport/corrupted_class.png" alt=""></p>
-<p>破解的思路有两种，一种是寻找FineReport加载插件所使用的ClassLoader，这其中必然有对Class文件解密的过程，还有一种就是寻找在插件打包的过程中，是怎样对插件进行加密的，本文采用的是第二种。</p>
-        
-          <a class="article-more-a" href="/2018/03/26/FineReport9-0插件加密破解/#more">more >></a>
-        
-      
+        <div class="article-info info-on-right">
+          
+          
 
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">Java反编译</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/03/26/FineReport9-0插件加密破解/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
+        </div>
+        <div class="clearfix"></div>
+    </header>
   </div>
 </article>
-
-
-
-
-
-
-
-
   
-    <article id="post-collection" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
+  
+    </div></section>
+  
+
     
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/05/10/collection/">文章收藏</a>
-    </h1>
-  
-
-        
-        <a href="/2017/05/10/collection/" class="archive-article-date">
-  	<time datetime="2017-05-10T11:24:38.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-05-10</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <ul>
-<li><a href="http://liuchengxu.org/blog-cn/posts/nosql-in-python" target="_blank" rel="noopener">用 Python 写一个 NoSQL 数据库</a></li>
-<li><a href="http://zhuanlan.zhihu.com/graphics/20119162" target="_blank" rel="noopener">Microfacet材质和多层材质</a></li>
-<li><a href="http://zhuanlan.zhihu.com/graphics/20119162" target="_blank" rel="noopener">图形学-知乎专栏</a></li>
-<li><a href="http://www.cnblogs.com/starfallen/p/4019350.html" target="_blank" rel="noopener">菲涅尔反射</a></li>
-<li><a href="http://www.lightxue.com/transforming-code-into-beautiful-idiomatic-python" target="_blank" rel="noopener">让你的Python代码优雅又地道</a></li>
-<li><a href="https://zhuanlan.zhihu.com/p/27199954" target="_blank" rel="noopener">GAN图像处理</a></li>
-<li><a href="https://zhuanlan.zhihu.com/p/29792886" target="_blank" rel="noopener">Promise异步流程控制</a></li>
-<li><a href="https://blog.csdn.net/chenleixing/article/details/50530419" target="_blank" rel="noopener">redis实践-美团</a></li>
-<li><a href="http://www.grakra.com/2017/06/17/Leveldb-RTFSC/" target="_blank" rel="noopener">LevelDB解析</a></li>
-</ul>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">collection</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/05/10/collection/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-
-
-
-  
-  
 
 
           </div>
@@ -357,9 +204,9 @@
     <script>
 	var yiliaConfig = {
 		mathjax: true,
-		isHome: true,
+		isHome: false,
 		isPost: false,
-		isArchive: false,
+		isArchive: true,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,
