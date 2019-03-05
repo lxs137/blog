@@ -164,7 +164,7 @@
       
         <p>最近打包android项目的时候，gradle总是报错：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Could not get resource &apos;http://maven.google.com/com/android/tools/build/gradle/3.1.3/gradle-3.1.3.pom&apos;.</span><br><span class="line">Could not GET &apos;http://maven.google.com/com/android/tools/build/gradle/3.1.1/gradle-3.1.3.pom&apos;.</span><br></pre></td></tr></table></figure>
-<p>本来以为这是和gradle build-tools的版本或者墙有关，测试下来，发现都不行，折腾了一下午也没找到原因，多亏这条<a href="https://stackoverflow.com/a/50603113/9797889" target="_blank" rel="noopener">回答</a>给了我启发。gradle在系统级别有一个配置文件gradle.properties，位于~/.gradle目录下，删除其中所有关于代理的配置：</p>
+<p>本来以为这是和gradle build-tools的版本或者墙有关，测试下来，发现都不行，折腾了一下午也没找到原因，多亏这条<a href="https://stackoverflow.com/a/50603113/9797889" target="_blank" rel="noopener">回答</a>给了我启发。一般来说，我们可以在Android Studio的设置中配置代理，但是gradle在系统级别有一个配置文件gradle.properties，其中也有关于代理的配置，位于~/.gradle目录下，检查一下这里面的代理是否需要：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">systemProp.https.proxyPort=1080</span><br><span class="line">systemProp.http.proxyHost=127.0.0.1</span><br><span class="line">systemProp.https.proxyHost=127.0.0.1</span><br><span class="line">systemProp.http.proxyPort=1080</span><br></pre></td></tr></table></figure>
 
       
@@ -348,7 +348,7 @@
   <div class="outer">
     <div id="footer-info">
     	<div class="footer-left">
-    		&copy; 2018 Menya Kun
+    		&copy; 2019 Menya Kun
     	</div>
       	<div class="footer-right">
       		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
@@ -448,11 +448,11 @@ MathJax.Hub.Queue(function() {
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">collection</a>
+                <a href="javascript:void(0)" class="js-tag color3">Java反编译</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">Java反编译</a>
+                <a href="javascript:void(0)" class="js-tag color1">collection</a>
               </li>
             
             <div class="clearfix"></div>
